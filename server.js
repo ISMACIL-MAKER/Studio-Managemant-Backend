@@ -311,3 +311,5 @@ app.put("/api/Customer/Archive/:id", protect, async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
