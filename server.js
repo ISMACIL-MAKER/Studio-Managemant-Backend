@@ -27,6 +27,14 @@ mongoose
   })
   .catch((err) => console.log("DB Connection Error: ❌", err));
 
+// Ku dar meeshaan backend-kaaga (Node.js / Express)
+app.get("/api/cron/wakeup", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Server-ka Render waa la soo toosiyay!",
+  });
+});
+
 // ==========================================
 // 👑 SUPERADMIN ENDPOINTS
 // ==========================================
