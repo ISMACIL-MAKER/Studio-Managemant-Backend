@@ -38,7 +38,7 @@ const AddCustomerSchem = new mongoose.Schema(
         "Wedding",
       ],
       require: true,
-      default: "VIP",
+      default: "FullBody",
     },
 
     status: {
