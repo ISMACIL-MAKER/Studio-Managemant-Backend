@@ -1,56 +1,71 @@
 import mongoose from "mongoose";
 
-const AddCustomerSchem = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  fullName: {
-    type: String,
-    required: true,
-  },
-  Phone: {
-    type: String,
-    required: true,
-  },
-  folderName: {
-    type: String,
-    required: true,
-  },
-  
-  customerType: {
-    type: String,
-    enum:["VIP","NORMAL",],
-    require:true,
-    default: "VIP",
-  },
-   
-  status: {
-    type: String,
-    enum:["Pending","Delivered","Completed",],
-    require:true,
-    default: "Pending",
-  },
-   
-  amountPaid:{
-    type:Number,
-    default:0
-  },
-  remainingAmount:{
-    type:Number,
-    default:0
-  },
-  numberOfPhotos:{
-    type:Number,
-    default:0
-  },
+const AddCustomerSchem = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    fullName: {
+      type: String,
+      required: true,
+    },
+    Phone: {
+      type: String,
+      required: true,
+    },
+    folderName: {
+      type: String,
+      required: true,
+    },
+
+    customerType: {
+      type: String,
+      enum: ["VIP", "NORMAL"],
+      require: true,
+      default: "VIP",
+    },
+
+    PhotoType: {
+      type: String,
+      enum: [
+        "FullBody",
+        "ID_Card",
+        "Headshot",
+        "Portrait",
+        "Certificate",
+        "Wedding",
+      ],
+      require: true,
+      default: "VIP",
+    },
+
+    status: {
+      type: String,
+      enum: ["Pending", "Delivered", "Completed"],
+      require: true,
+      default: "Pending",
+    },
+
+    amountPaid: {
+      type: Number,
+      default: 0,
+    },
+    remainingAmount: {
+      type: Number,
+      default: 0,
+    },
+    numberOfPhotos: {
+      type: Number,
+      default: 0,
+    },
     isArchived: {
-    type: Boolean,
-    default: false, // Marka macmiilka la abuurayo marka hore la archive-gareyn maayo
+      type: Boolean,
+      default: false, // Marka macmiilka la abuurayo marka hore la archive-gareyn maayo
+    },
   },
+  { timestamps: true },
+);
 
-
-},{timestamps:true});
-
-export default mongoose.model("AddCustomer",AddCustomerSchem);
+export default mongoose.model("AddCustomer", AddCustomerSchem);
