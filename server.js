@@ -8,17 +8,22 @@ import cookieParser from "cookie-parser";
 // Models & Controls
 import AddCustomer from "./models/AddCustomer.js";
 import { protect } from "./middleware/authMiddleware.js";
-import { loginUser, registerUser,refreshToken } from "./controllers/userController.js";
+import {
+  loginUser,
+  registerUser,
+  refreshToken,
+} from "./controllers/userController.js";
 import User from "./models/User.js";
 import bcrypt from "bcryptjs";
 
 dotenv.config();
 
 const app = express();
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // URL-ka React app-kaaga (ku beddel kan dhabta ah haddii uu ka duwan yahay)
-    credentials: true, // Tani waxay oggolaanaysaa in Cookies-ka la isku gudbiyo
+    origin: ["https://lenssuitestudio.vercel.app", "http://localhost:5173"], // 🌟 Labada guri ba hadda wey kuu furnaanayaan!
+    credentials: true,
   }),
 );
 
