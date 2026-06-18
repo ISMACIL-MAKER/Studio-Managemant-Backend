@@ -2,8 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
-import rateLimit from "express-rate-limit"; // 🌟 Soo hormaray
-import cookieParser from "cookie-parser";
+import rateLimit from "express-rate-limit"; 
+import cookieParser from "cookie-parser"; // 🌟 Diyaar
 
 // Models & Controls
 import AddCustomer from "./models/AddCustomer.js";
@@ -20,26 +20,28 @@ dotenv.config();
 
 const app = express();
 
+// 🌟 1. CONFIGURATION-KA CORS (Kaliya midkan saxda ah ayaa jira hadda)
 app.use(
   cors({
-    origin: ["https://lenssuitestudio.vercel.app", "http://localhost:5173"], // 🌟 Labada guri ba hadda wey kuu furnaanayaan!
-    credentials: true,
-  }),
+    origin: ["https://lenssuitestudio.vercel.app", "https://nssuitestudio.vercel.app", "http://localhost:5173"], 
+    credentials: true, // Muhiim si Cookies-ka loo oggolaado
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  })
 );
 
-// 🌟 MUHIIM: Render proxies ayay isticmaashaa, khadkan ayaa ka caawinaya rate-limit-ka inuu qabto IP-ga saxda ah ee macmiilka
+// 🌟 2. MUHIIM: Render proxies proxy trust-ka iyo shaqada Cookies-ka
 app.set("trust proxy", 1);
 
-app.use(cors());
 app.use(express.json());
+app.use(cookieParser()); // 🌟 3. HALKAN AYAA LAGU SHAQALAYSIYAY COOKIE-PARSER-KA
 
 // ==========================================
 // 🛡️ RATE LIMITERS (Waa inay halkan sare ku jiraan)
 // ==========================================
 
-// 1. Xaddidaadda Guud: IP kasta wuxuu samayn karaa 100 codsi 15 daqiiqo walba
 const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 daqiiqo
+  windowMs: 15 * 60 * 1000, 
   max: 100,
   message: {
     error: "Codsiyo badan ayaa ka yimid IP-gaga, fadlan sug 15 daqiiqo.",
@@ -48,9 +50,8 @@ const generalLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// 2. Xaddidaadda Login-ka iyo Register-ka (Aad u adag)
 const authLimiter = rateLimit({
-  windowMs: 5 * 60 * 1000, // 5 daqiiqo
+  windowMs: 5 * 60 * 1000, 
   max: 5,
   message: {
     error: "Isku-dayo badan oo khaldan! Fadlan sug 5 daqiiqo ka dib.",
@@ -59,7 +60,7 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// 🌟 CODSASHADA MIDDLEWARES-KA (Kahor intaanan endpoints la qorin)
+// CODSASHADA MIDDLEWARES-KA
 app.use("/api/User/Login", authLimiter);
 app.use("/api/User/register", authLimiter);
 app.use("/api/", generalLimiter);
