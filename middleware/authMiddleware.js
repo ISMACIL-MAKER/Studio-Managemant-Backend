@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import User from "../models/User";
 
-export const protect = (req, res, next) => {
+export const protect  = async (req, res, next) => {
   try {
     let token = req.headers.authorization;
 
@@ -17,6 +18,14 @@ export const protect = (req, res, next) => {
 
     // verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const userCheck= await User.findById(decoded.id)
+    if(!userCheck || !userCheck.isActive){
+       return res.status(401).json({
+        error:"disabled_user",
+        message:"Account wala xanibay la xedhedh SuperAdmin",
+      });
+    }
 
     // 🌟 AMNIGA CUSUB: Hubi haddii uu jiro isbeddel dhanka Browser-ka ah (User-Agent)
     const currentDevice = req.headers["user-agent"] || "unknown_browser";
