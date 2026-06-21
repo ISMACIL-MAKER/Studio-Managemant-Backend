@@ -64,7 +64,7 @@ const authLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
- /// forgotPassword and resetPassword
+ /// forgotPassword and resetPasswor
 app.post("/api/User/forgotPassword", forgotPassword);
 app.post("/api/User/resetPassword/:token", resetPassword);
 
